@@ -1,4 +1,4 @@
-FROM ghcr.io/anomalyco/opencode:latest
+FROM ghcr.io/randommm/opencode-fork:latest
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
