@@ -6,8 +6,8 @@ Just Opencode in a container with some tools.
 
 ```bash
 podman run -it --rm \
-  -v "$(pwd):/app:Z" \
-  -w "/app" \
+  -v "$(pwd):/work$(pwd):Z" \
+  -w "/work$(pwd)" \
   -v "$HOME/.opencode:/root/.opencode:Z" \
   -v "$HOME/.local/share/opencode:/root/.local/share/opencode:Z" \
   -v "$HOME/.local/state/opencode:/root/.local/state/opencode:Z" \
