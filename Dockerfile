@@ -1,7 +1,5 @@
 FROM docker.io/ubuntu
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
   bash python3 ripgrep \
   git curl wget ca-certificates gnupg \
@@ -13,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   zip unzip tar gzip openssh-client \
   gh vim nano eza fzf shellcheck yamllint \
   docker.io sqlite3 postgresql-client \
-  htop tmux
+  htop tmux clang default-jdk auto-apt-proxy
 
 RUN mkdir -p /etc/apt/keyrings \
   && curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key \
@@ -23,9 +21,16 @@ RUN mkdir -p /etc/apt/keyrings \
   && apt-get update \
   && apt-get install -y --no-install-recommends kubectl
 
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
 RUN curl -fsSL https://opencode.ai/install | bash
 
-ENV PATH="/root/.opencode/bin:${PATH}"
+ENV PATH="/root/.opencode/bin:/root/.local/bin:${PATH}"
+
+ARG CACHEBUST
+RUN echo "CACHEBUST=$CACHEBUST" >/dev/null && \
+  apt-get update && apt-get upgrade -y && \
+  opencode upgrade && uv self update
 
 RUN ln -s /usr/bin/fdfind /usr/local/bin/fd
 
