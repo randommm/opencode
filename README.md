@@ -12,10 +12,8 @@ podman run -it --rm \
   -v "$HOME/.local/state/opencode:/root/.local/state/opencode:Z" \
   -v "$HOME/.config/opencode:/root/.config/opencode:Z" \
   -v "$HOME/.cache/opencode:/root/.cache/opencode:Z" \
-  --network host \
-  --volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
-  --volume $HOME/.Xauthority:/root/.Xauthority:ro \
-  --env DISPLAY=$DISPLAY \
+  --security-opt=no-new-privileges \
+  --cap-drop=all \
   ghcr.io/randommm/opencode
 ```
 
@@ -36,4 +34,16 @@ You might also want to add more bind to you podman command, e.g.:
   -v $HOME/.local/share/uv:/root/.local/share/uv \
   -v $HOME/.cache/pip:/root/.cache/pip \
   -v $HOME/.cache/huggingface:/root/.cache/huggingface \
+```
+
+## Clipboard support
+
+You will need an OSC52 compliant terminal for clipboard to work, e.g.: kitty, konsole, ghostty.
+
+Another less secure option is to add:
+
+```bash
+  -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+  -v $HOME/.Xauthority:/root/.Xauthority:ro \
+  -e DISPLAY=$DISPLAY
 ```
