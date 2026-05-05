@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential linux-headers-generic \
   libffi-dev libssl-dev \
   cargo rustc golang-go \
-  nodejs npm fd-find \
+  nodejs npm fd-find elan \
   jq python3-pip xclip python-is-python3 \
   zip unzip tar gzip openssh-client \
   gh vim nano eza fzf shellcheck yamllint \
